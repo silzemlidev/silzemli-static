@@ -229,6 +229,9 @@ strong {
   right: 0;
   z-index: 999999;
   height: var(--header-h);
+  /* Force GPU compositing — fixes iOS Safari position:fixed jitter */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .header-inner {
@@ -1358,6 +1361,10 @@ strong {
     font-size: clamp(16px, 5vw, 20px);
   }
 
+  .banquet-content p {
+    font-size: clamp(14px, 4vw, 20px);
+  }
+
   .banquet-image {
     height: 90vw;
     min-height: 280px;
@@ -1388,6 +1395,11 @@ strong {
 
   .contacts-phone {
     font-size: clamp(17px, 5vw, 20px);
+  }
+
+  /* Header — hide social icons so logo doesn't overlap (footer has them) */
+  .site-header .social-links {
+    display: none;
   }
 
   /* Footer */

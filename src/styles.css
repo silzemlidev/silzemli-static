@@ -870,18 +870,23 @@ strong {
 
 .hookah-prices {
   display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  flex-direction: column;
+  margin: 18px auto 20px;
+  max-width: 300px;
+  width: 100%;
 }
 
 .hookah-price-item {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 20px;
-  border: 1px solid var(--warm-gray);
-  border-radius: 4px;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.18);
+}
+
+.hookah-price-item:last-child {
+  border-bottom: none;
 }
 
 .hookah-price-name {
@@ -894,6 +899,7 @@ strong {
   font-size: 17px;
   font-weight: 700;
   color: var(--black);
+  white-space: nowrap;
 }
 
 
@@ -1339,18 +1345,6 @@ strong {
     text-align: center;
     padding: 14px 30px;
     border-radius: 50px;
-  }
-
-  /* Hookah price cards — stack vertically on mobile */
-  .hookah-prices {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .hookah-price-item {
-    width: 100%;
-    max-width: 280px;
-    justify-content: space-between;
   }
 
   .hookah-info {

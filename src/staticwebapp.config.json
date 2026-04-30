@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "route": "/menu",
+      "redirect": "/#menu",
+      "statusCode": 301
+    },
+    {
+      "route": "/about",
+      "redirect": "/#about",
+      "statusCode": 301
+    },
+    {
+      "route": "/contact",
+      "redirect": "/#contact",
+      "statusCode": 301
+    },
+    {
+      "route": "/gallery",
+      "redirect": "/#gallery",
+      "statusCode": 301
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/images/*.{png,jpg,gif}", "/css/*", "/js/*"]
+  }
+}

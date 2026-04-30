@@ -8,7 +8,13 @@
   <link rel="canonical" href="https://silzemli.ua/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+        media="print" onload="this.media='all'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  </noscript>
+  <link rel="preload" as="image" href="assets/bg.webp" type="image/webp" fetchpriority="high" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <link rel="stylesheet" href="styles.css" />
@@ -30,7 +36,8 @@
       </a>
 
       <a href="/" class="site-logo" aria-label="Сіль Землі — головна">
-        <img src="assets/sz-logo.svg" alt="Сіль Землі" class="logo-img" fetchpriority="high" />
+        <img src="assets/sz-logo.svg" alt="Сіль Землі" class="logo-img"
+             width="265" height="28" fetchpriority="high" decoding="sync" />
       </a>
 
       <div class="social-links">
@@ -64,7 +71,11 @@
          HERO
          =========================== -->
     <section class="hero" aria-label="Головний банер">
-      <img src="assets/bg.jpg" alt="Ресторан Сіль Землі — інтер'єр" class="hero-bg" fetchpriority="high" />
+      <picture>
+        <source srcset="assets/bg.webp" type="image/webp" />
+        <img src="assets/bg.jpg" alt="Ресторан Сіль Землі — інтер'єр" class="hero-bg"
+             width="1680" height="900" fetchpriority="high" decoding="sync" />
+      </picture>
 
       <div class="hero-row">
         <div class="hero-left"></div>
@@ -92,14 +103,22 @@
           <p>Атмосфера закладу дозволить гостям поринути у безтурботний домашній відпочинок.</p>
         </div>
         <div class="about-image">
-          <img src="assets/1.jpg" alt="Інтер'єр ресторану Сіль Землі" loading="lazy" />
+          <picture>
+            <source srcset="assets/1.webp" type="image/webp" />
+            <img src="assets/1.jpg" alt="Інтер'єр ресторану Сіль Землі"
+                 width="853" height="853" loading="lazy" decoding="async" />
+          </picture>
         </div>
       </div>
 
       <!-- Комплекс: image left / text right -->
       <div class="about-block">
         <div class="about-image">
-          <img src="assets/2.jpg" alt="Зовнішній вигляд комплексу Сіль Землі" loading="lazy" />
+          <picture>
+            <source srcset="assets/2.webp" type="image/webp" />
+            <img src="assets/2.jpg" alt="Зовнішній вигляд комплексу Сіль Землі"
+                 width="1309" height="1309" loading="lazy" decoding="async" />
+          </picture>
         </div>
         <div class="about-text">
           <h2 class="about-title">Комплекс</h2>
@@ -117,14 +136,22 @@
           <p>Ми поєднали українські традиції й сучасні кулінарні техніки для того, щоб створити особливу й переосмислену українську кухню.</p>
         </div>
         <div class="about-image">
-          <img src="assets/IMG_6734.jpg" alt="Страви кухні ресторану Сіль Землі" loading="lazy" />
+          <picture>
+            <source srcset="assets/IMG_6734.webp" type="image/webp" />
+            <img src="assets/IMG_6734.jpg" alt="Страви кухні ресторану Сіль Землі"
+                 width="1333" height="2000" loading="lazy" decoding="async" />
+          </picture>
         </div>
       </div>
 
       <!-- Цінності: image left / text right -->
       <div class="about-block">
         <div class="about-image">
-          <img src="assets/IMG_6281.jpg" alt="Атмосфера та традиції ресторану Сіль Землі" loading="lazy" />
+          <picture>
+            <source srcset="assets/IMG_6281.webp" type="image/webp" />
+            <img src="assets/IMG_6281.jpg" alt="Атмосфера та традиції ресторану Сіль Землі"
+                 width="1361" height="1941" loading="lazy" decoding="async" />
+          </picture>
         </div>
         <div class="about-text">
           <h2 class="about-title">Цінності</h2>
@@ -150,22 +177,26 @@
           <div class="masonry">
             <div class="masonry-item">
               <div class="img-wrap">
-                <img src="assets/g01.jpg" alt="Святкування у Сіль Землі" loading="lazy" />
+                <picture>
+                  <source srcset="assets/g01.webp" type="image/webp" />
+                  <img src="assets/g01.jpg" alt="Святкування у Сіль Землі"
+                       width="1680" height="1120" loading="lazy" decoding="async" />
+                </picture>
               </div>
             </div>
             <div class="masonry-item">
               <div class="img-wrap">
-                <img src="assets/g004.webp" alt="Святкування у ресторані" loading="lazy" />
+                <img src="assets/g004.webp" alt="Святкування у ресторані" loading="lazy" decoding="async" />
               </div>
             </div>
             <div class="masonry-item">
               <div class="img-wrap">
-                <img src="assets/g006.webp" alt="Зала ресторану" loading="lazy" />
+                <img src="assets/g006.webp" alt="Зала ресторану" loading="lazy" decoding="async" />
               </div>
             </div>
             <div class="masonry-item">
               <div class="img-wrap">
-                <img src="assets/g005.webp" alt="Кухня ресторану" loading="lazy" />
+                <img src="assets/g005.webp" alt="Кухня ресторану" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
@@ -176,22 +207,26 @@
           <div class="masonry">
             <div class="masonry-item">
               <div class="img-wrap">
-                <img src="assets/g007.jpg" alt="Подія у ресторані Сіль Землі" loading="lazy" />
+                <picture>
+                  <source srcset="assets/g007.webp" type="image/webp" />
+                  <img src="assets/g007.jpg" alt="Подія у ресторані Сіль Землі"
+                       width="1280" height="853" loading="lazy" decoding="async" />
+                </picture>
               </div>
             </div>
             <div class="masonry-item">
               <div class="img-wrap">
-                <img src="assets/g001.webp" alt="Страви ресторану Сіль Землі" loading="lazy" />
+                <img src="assets/g001.webp" alt="Страви ресторану Сіль Землі" loading="lazy" decoding="async" />
               </div>
             </div>
             <div class="masonry-item">
               <div class="img-wrap">
-                <img src="assets/g009.webp" alt="Фотографія ресторану" loading="lazy" />
+                <img src="assets/g009.webp" alt="Фотографія ресторану" loading="lazy" decoding="async" />
               </div>
             </div>
             <div class="masonry-item">
               <div class="img-wrap">
-                <img src="assets/g003.webp" alt="Атмосфера закладу" loading="lazy" />
+                <img src="assets/g003.webp" alt="Атмосфера закладу" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
@@ -202,17 +237,21 @@
           <div class="masonry">
             <div class="masonry-item">
               <div class="img-wrap">
-                <img src="assets/g008.jpg" alt="Деталі страв ресторану" loading="lazy" />
+                <picture>
+                  <source srcset="assets/g008.webp" type="image/webp" />
+                  <img src="assets/g008.jpg" alt="Деталі страв ресторану"
+                       width="1280" height="853" loading="lazy" decoding="async" />
+                </picture>
               </div>
             </div>
              <div class="masonry-item">
               <div class="img-wrap">
-                <img src="assets/g010.webp" alt="Інтер'єр ресторану Сіль Землі" loading="lazy" />
+                <img src="assets/g010.webp" alt="Інтер'єр ресторану Сіль Землі" loading="lazy" decoding="async" />
               </div>
             </div>
             <div class="masonry-item">
               <div class="img-wrap">
-                <img src="assets/g002.webp" alt="Банкетна зала Сіль Землі" loading="lazy" />
+                <img src="assets/g002.webp" alt="Банкетна зала Сіль Землі" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
@@ -293,10 +332,18 @@
 
       <div class="banquet-images">
         <div class="banquet-image">
-          <img src="assets/IMG_0134-0.jpg" alt="Банкетна зала Сіль Землі" loading="lazy" />
+          <picture>
+            <source srcset="assets/IMG_0134-0.webp" type="image/webp" />
+            <img src="assets/IMG_0134-0.jpg" alt="Банкетна зала Сіль Землі"
+                 width="853" height="1280" loading="lazy" decoding="async" />
+          </picture>
         </div>
         <div class="banquet-image">
-          <img src="assets/IMG_01.jpg" alt="Весільний захід у Сіль Землі" loading="lazy" />
+          <picture>
+            <source srcset="assets/IMG_01.webp" type="image/webp" />
+            <img src="assets/IMG_01.jpg" alt="Весільний захід у Сіль Землі"
+                 width="853" height="1280" loading="lazy" decoding="async" />
+          </picture>
         </div>
       </div>
     </section>
@@ -306,7 +353,11 @@
          =========================== -->
     <section class="delivery-section" aria-label="Доставка мʼяса">
       <a href="https://svognu.choiceqr.com/" target="_blank" rel="noopener noreferrer" class="delivery-link">
-        <img src="assets/IMG_0103.png" alt="Доставка мʼяса «З вогню»" class="delivery-bg" loading="lazy" />
+        <picture>
+          <source srcset="assets/IMG_0103.webp" type="image/webp" />
+          <img src="assets/IMG_0103.png" alt="Доставка мʼяса «З вогню»" class="delivery-bg"
+               width="900" height="900" loading="lazy" decoding="async" />
+        </picture>
         <div class="delivery-content">
           <p><strong>Доставка мʼяса «З вогню»</strong></p>
         </div>
@@ -412,7 +463,8 @@
 
         <div class="footer-logo">
           <a href="/" aria-label="Сіль Землі — до початку">
-            <img src="assets/logo-footer.svg" alt="Сіль Землі" class="logo-img" loading="lazy" />
+            <img src="assets/logo-footer.svg" alt="Сіль Землі" class="logo-img"
+                 width="69" height="32" loading="lazy" decoding="async" />
           </a>
         </div>
 

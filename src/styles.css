@@ -481,9 +481,9 @@ strong {
 
 /* Aspect ratios matching live site column dimensions (616px wide columns) */
 #about .about-block:nth-child(1) .about-image { aspect-ratio: 1 / 1; }        /* 1.jpg  616×616  */
-#about .about-block:nth-child(2) .about-image { aspect-ratio: 1 / 1; }        /* 2.jpg  616×616  */
-#about .about-block:nth-child(3) .about-image { aspect-ratio: 1 / 1; }        /* IMG_6734 cropped square */
-#about .about-block:nth-child(4) .about-image { aspect-ratio: 1 / 1; }        /* IMG_6281 cropped square */
+#about .about-block:nth-child(2) .about-image { aspect-ratio: 1 / 1; }        /* IMG_5016 cropped square */
+#about .about-block:nth-child(3) .about-image { aspect-ratio: 1 / 1; }        /* IMG_5542 cropped square */
+#about .about-block:nth-child(4) .about-image { aspect-ratio: 1 / 1; }        /* IMG_5536 cropped square */
 
 /* ================================
    GALLERY — MASONRY SLIDER
@@ -866,6 +866,20 @@ strong {
 
 .hookah-info p:last-child {
   margin-bottom: 0;
+}
+
+.hookah-photo {
+  margin: 22px auto 0;
+  max-width: 320px;
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.hookah-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .hookah-prices {

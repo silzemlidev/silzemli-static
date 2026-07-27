@@ -847,7 +847,7 @@ strong {
 
 /* Hookah info — subtle card to visually separate it from the buttons */
 .hookah-info {
-  max-width: 680px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 28px 36px;
   background: transparent;
@@ -858,6 +858,14 @@ strong {
   font-weight: 400;
   line-height: 1.55;
   color: var(--black);
+  display: flex;
+  align-items: center;
+  gap: clamp(28px, 5vw, 56px);
+}
+
+.hookah-text {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .hookah-info p {
@@ -869,8 +877,8 @@ strong {
 }
 
 .hookah-photo {
-  margin: 22px auto 0;
-  max-width: 320px;
+  flex: 0 0 300px;
+  max-width: 300px;
   width: 100%;
   border-radius: 6px;
   overflow: hidden;
@@ -1363,6 +1371,14 @@ strong {
 
   .hookah-info {
     font-size: clamp(14px, 4vw, 19px);
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .hookah-photo {
+    flex: 0 0 auto;
+    max-width: 320px;
+    margin: 0 auto;
   }
 
   /* Banquet */

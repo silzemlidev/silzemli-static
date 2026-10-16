@@ -442,6 +442,16 @@ strong {
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* Working hours block inside the hero: light text on dark overlay */
+.hero-right .contacts-block {
+  padding: 0 0 16px;
+}
+
+.hero-right .contacts-label,
+.hero-right .contacts-block p {
+  color: var(--white);
+}
+
 
 /* ================================
    ABOUT SECTIONS

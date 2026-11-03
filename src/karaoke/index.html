@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Караоке — каталог пісень | Сіль Землі</title>
+  <meta name="description" content="Каталог пісень караоке ресторанного комплексу «Сіль Землі». Пошук за назвою пісні, виконавцем або кодом." />
+  <link rel="canonical" href="https://silzemli.ua/karaoke/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+        media="print" onload="this.media='all'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  </noscript>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <span id="top" aria-hidden="true" style="position:absolute;top:0;left:0;height:0;overflow:hidden;pointer-events:none;"></span>
+
+  <!-- ===========================
+       HEADER
+       =========================== -->
+  <header class="site-header">
+    <div class="header-inner">
+
+      <a class="nav-toggle" href="#" aria-label="Відкрити меню" aria-expanded="false" id="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </a>
+
+      <a href="/" class="site-logo" aria-label="Сіль Землі — головна">
+        <img src="/assets/sz-logo.svg" alt="Сіль Землі" class="logo-img"
+             width="265" height="28" fetchpriority="high" decoding="sync" />
+      </a>
+
+      <div class="social-links">
+        <a href="https://www.facebook.com/silzemliua/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/silzemliua/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://t.me/Banquet_Sil_Zemli" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Flyout navigation overlay -->
+  <div class="flyout-overlay" id="flyout-overlay"></div>
+
+  <!-- Flyout navigation panel -->
+  <nav class="flyout-nav" id="main-nav" aria-label="Головне меню">
+    <ul>
+      <li><a href="/#about">Про нас</a></li>
+      <li><a href="/#gallery">Галерея</a></li>
+      <li><a href="/#menu">Меню</a></li>
+      <li><a href="/#banquet">Банкети</a></li>
+      <li><a href="https://svognu.choiceqr.com/" target="_blank" rel="noopener noreferrer"><u>Доставка мʼяса «З вогню»</u></a></li>
+      <li><a href="/#contacts">Контакти</a></li>
+    </ul>
+  </nav>
+
+
+  <main id="content">
+
+    <!-- ===========================
+         KARAOKE — КАТАЛОГ ПІСЕНЬ
+         Дані: /karaoke/songs.json
+         Формат: { "updated": "YYYY-MM-DD", "songs": [["Виконавець", "Назва", "код"], ...] }
+         УВАГА: зараз у songs.json ТЕСТОВІ дані — замінити експортом з Evolution Pro2 / EvoClub.
+         =========================== -->
+    <section class="karaoke-section" aria-label="Караоке">
+      <div class="container">
+        <h1 class="section-heading">Караоке</h1>
+        <p class="menu-intro">
+          Каталог пісень, доступних у нашому караоке.<br>
+          Шукайте за назвою пісні, виконавцем або кодом.
+        </p>
+
+        <form class="karaoke-search" role="search" id="karaoke-form" style="scroll-margin-top:90px">
+          <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+          <input type="search" id="karaoke-q" name="q"
+                 placeholder="Пісня або виконавець"
+                 aria-label="Пошук пісні"
+                 autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                 enterkeyhint="search" />
+        </form>
+
+        <p class="karaoke-count" id="karaoke-count" aria-live="polite">Завантаження каталогу…</p>
+
+        <ul class="karaoke-list" id="karaoke-list"></ul>
+
+        <nav class="karaoke-pager" id="karaoke-pager" aria-label="Сторінки каталогу" hidden></nav>
+
+        <aside class="karaoke-app" aria-labelledby="karaoke-app-title">
+          <h2 id="karaoke-app-title" class="karaoke-app-title">Не знайшли свою пісню?</h2>
+          <p class="karaoke-app-text">
+            Повний каталог пісень доступний у застосунку <strong>EvoClub User</strong>.
+            Шукайте пісні та надсилайте замовлення прямо з телефону.
+          </p>
+          <div class="karaoke-app-btns">
+            <a class="karaoke-store" href="https://apps.apple.com/app/id988306103" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-apple" aria-hidden="true"></i>
+              <span>Завантажити для iOS</span>
+            </a>
+            <a class="karaoke-store" href="https://play.google.com/store/apps/details?id=evolution.studio.evoclubuserseries" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-google-play" aria-hidden="true"></i>
+              <span>Завантажити для Android</span>
+            </a>
+          </div>
+        </aside>
+
+        <div class="karaoke-back">
+          <a href="/#menu" class="menu-btn">← До меню</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ===========================
+       FOOTER
+       =========================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+
+        <div class="footer-logo">
+          <a href="/" aria-label="Сіль Землі — на головну">
+            <img src="/assets/logo-footer.svg" alt="Сіль Землі" class="logo-img"
+                 width="69" height="32" loading="lazy" decoding="async" />
+          </a>
+        </div>
+
+        <div class="footer-links">
+          <a href="/polconf/">Політика конфіденційності</a>
+        </div>
+
+        <div class="social-links">
+          <a href="https://www.facebook.com/silzemliua/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/silzemliua/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://t.me/Banquet_Sil_Zemli" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <a href="#top" class="back-to-top" aria-label="Вгору"><i class="fas fa-chevron-up"></i></a>
+
+  <script>
+    // ── Flyout nav ──────────────────────────────
+    var navToggle     = document.getElementById('nav-toggle');
+    var mainNav       = document.getElementById('main-nav');
+    var flyoutOverlay = document.getElementById('flyout-overlay');
+
+    function openNav() {
+      mainNav.classList.add('open');
+      flyoutOverlay.classList.add('visible');
+      navToggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeNav() {
+      mainNav.classList.remove('open');
+      flyoutOverlay.classList.remove('visible');
+      navToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    navToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      mainNav.classList.contains('open') ? closeNav() : openNav();
+    });
+    flyoutOverlay.addEventListener('click', closeNav);
+    mainNav.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', closeNav);
+    });
+
+    // ── Karaoke catalog ─────────────────────────
+    (function() {
+      var PAGE_SIZE = 50;
+
+      var form    = document.getElementById('karaoke-form');
+      var input   = document.getElementById('karaoke-q');
+      var countEl = document.getElementById('karaoke-count');
+      var listEl  = document.getElementById('karaoke-list');
+      var pagerEl = document.getElementById('karaoke-pager');
+
+      var songs    = [];   // [{ a, t, c, key }], sorted by artist, then title
+      var results  = [];
+      var page     = 1;
+      var lastNorm = null;
+      var timer    = null;
+
+      // Lowercase, strip diacritics (ё→е, é→e, å→a, й→и, ї→і),
+      // drop apostrophes ("Don't" → "dont", "пам'ять" → "память"),
+      // turn any other punctuation into spaces.
+      function normalize(s) {
+        return String(s)
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[̀-ͯ]/g, '')
+          .replace(/[ʼ'’`]/g, '')
+          .replace(/[^\p{L}\p{N}]+/gu, ' ')
+          .trim();
+      }
+
+      function plural(n, one, few, many) {
+        var m10 = n % 10, m100 = n % 100;
+        if (m10 === 1 && m100 !== 11) return one;
+        if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
+        return many;
+      }
+
+      function formatNum(n) {
+        return n.toLocaleString('uk-UA');
+      }
+
+      function renderCount(norm) {
+        var n = results.length;
+        if (!norm) {
+          countEl.textContent = 'У каталозі ' + formatNum(n) + ' ' + plural(n, 'пісня', 'пісні', 'пісень');
+        } else if (n === 0) {
+          countEl.textContent = 'Нічого не знайдено. Спробуйте інший запит.';
+        } else {
+          countEl.textContent = 'Знайдено ' + formatNum(n) + ' ' + plural(n, 'пісню', 'пісні', 'пісень');
+        }
+      }
+
+      function pageCount() {
+        return Math.max(1, Math.ceil(results.length / PAGE_SIZE));
+      }
+
+      function renderPage() {
+        var start = (page - 1) * PAGE_SIZE;
+        var end   = Math.min(start + PAGE_SIZE, results.length);
+        var frag  = document.createDocumentFragment();
+        listEl.textContent = '';
+
+        for (var i = start; i < end; i++) {
+          var s  = results[i];
+          var li = document.createElement('li');
+          li.className = 'karaoke-item';
+
+          var song = document.createElement('div');
+          song.className = 'karaoke-song';
+
+          var title = document.createElement('span');
+          title.className = 'karaoke-title';
+          title.textContent = s.t;
+          song.appendChild(title);
+
+          if (s.a) {
+            var artist = document.createElement('span');
+            artist.className = 'karaoke-artist';
+            artist.textContent = s.a;
+            song.appendChild(artist);
+          }
+          li.appendChild(song);
+
+          if (s.c) {
+            var code = document.createElement('span');
+            code.className = 'karaoke-code';
+            code.textContent = s.c;
+            li.appendChild(code);
+          }
+
+          frag.appendChild(li);
+        }
+
+        listEl.appendChild(frag);
+        renderPager();
+      }
+
+      function pageBtn(label, target, opts) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'karaoke-page' + (opts && opts.current ? ' current' : '');
+        b.textContent = label;
+        if (opts && opts.aria) b.setAttribute('aria-label', opts.aria);
+        if (opts && opts.current) b.setAttribute('aria-current', 'page');
+        if (opts && opts.disabled) b.disabled = true;
+        b.addEventListener('click', function() { goTo(target); });
+        return b;
+      }
+
+      function renderPager() {
+        var total = pageCount();
+        pagerEl.textContent = '';
+        var multi = results.length > PAGE_SIZE;
+        pagerEl.hidden = !multi;
+        if (!multi) return;
+
+        pagerEl.appendChild(pageBtn('‹', page - 1, { aria: 'Попередня сторінка', disabled: page === 1 }));
+
+        // 1 … (page-1) page (page+1) … last
+        var nums = [];
+        for (var n = 1; n <= total; n++) {
+          if (n === 1 || n === total || Math.abs(n - page) <= 1) nums.push(n);
+        }
+        var prev = 0;
+        nums.forEach(function(n) {
+          if (n - prev > 1) {
+            var gap = document.createElement('span');
+            gap.className = 'karaoke-page-gap';
+            gap.textContent = '…';
+            pagerEl.appendChild(gap);
+          }
+          pagerEl.appendChild(pageBtn(String(n), n, { current: n === page, aria: 'Сторінка ' + n }));
+          prev = n;
+        });
+
+        pagerEl.appendChild(pageBtn('›', page + 1, { aria: 'Наступна сторінка', disabled: page === total }));
+      }
+
+      function goTo(n) {
+        n = Math.min(Math.max(1, n), pageCount());
+        if (n === page) return;
+        page = n;
+        renderPage();
+        countEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+
+      function search(raw) {
+        var norm = normalize(raw);
+        if (norm === lastNorm) return;
+
+        var tokens = norm ? norm.split(' ') : [];
+        // When the query only grows (typing forward), the new matches are a
+        // subset of the previous ones — filter those instead of the whole catalog.
+        var pool = (lastNorm && norm.indexOf(lastNorm) === 0) ? results : songs;
+
+        results = tokens.length
+          ? pool.filter(function(s) {
+              for (var i = 0; i < tokens.length; i++) {
+                if (s.key.indexOf(tokens[i]) === -1) return false;
+              }
+              return true;
+            })
+          : songs;
+
+        lastNorm = norm;
+        page = 1;
+        renderCount(norm);
+        renderPage();
+      }
+
+      function syncUrl(raw) {
+        var url = new URL(window.location.href);
+        if (raw.trim()) url.searchParams.set('q', raw.trim());
+        else url.searchParams.delete('q');
+        history.replaceState(null, '', url);
+      }
+
+      input.addEventListener('input', function() {
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+          search(input.value);
+          syncUrl(input.value);
+        }, 150);
+      });
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        clearTimeout(timer);
+        search(input.value);
+        syncUrl(input.value);
+        input.blur(); // hide the mobile keyboard
+      });
+
+      fetch('/karaoke/songs.json', { cache: 'no-cache' })
+        .then(function(res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        })
+        .then(function(data) {
+          var collator = new Intl.Collator('uk', { sensitivity: 'base', numeric: true });
+          songs = (data.songs || [])
+            .filter(function(r) { return r && r[1]; })
+            .map(function(r) {
+              var a = r[0] ? String(r[0]) : '';
+              var t = String(r[1]);
+              var c = r[2] != null ? String(r[2]) : '';
+              return { a: a, t: t, c: c, key: normalize(a + ' ' + t + ' ' + c) };
+            })
+            .sort(function(x, y) {
+              return collator.compare(x.a, y.a) || collator.compare(x.t, y.t);
+            });
+
+          var q = new URLSearchParams(window.location.search).get('q') || '';
+          input.value = q;
+          search(q);
+        })
+        .catch(function() {
+          countEl.textContent = 'Не вдалося завантажити каталог. Спробуйте оновити сторінку.';
+        });
+    }());
+
+    // ── Back to top ─────────────────────────────
+    var btt = document.querySelector('.back-to-top');
+    window.addEventListener('scroll', function() {
+      btt.classList.toggle('visible', window.scrollY > 600);
+    });
+  </script>
+
+</body>
+</html>

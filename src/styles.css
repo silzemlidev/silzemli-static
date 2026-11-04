@@ -1339,50 +1339,86 @@ strong {
   white-space: nowrap;
 }
 
-.karaoke-pager {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 28px;
+.karaoke-cats {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
 }
 
-.karaoke-pager[hidden] {
+.karaoke-cat {
+  margin-bottom: 12px;
+  background: var(--white);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.karaoke-cat summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.karaoke-cat summary::-webkit-details-marker {
   display: none;
 }
 
-.karaoke-page {
-  min-width: 42px;
-  height: 42px;
-  padding: 0 12px;
-  border: 0;
-  border-radius: 21px;
+.karaoke-cat summary::after {
+  content: "";
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin: -4px 4px 0 0;
+  border: solid var(--black);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  transition: transform 0.2s, margin 0.2s;
+}
+
+.karaoke-cat[open] summary::after {
+  margin-top: 4px;
+  transform: rotate(-135deg);
+}
+
+.karaoke-cat-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.karaoke-cat-count {
+  flex-shrink: 0;
+  padding: 4px 12px;
+  border-radius: 50px;
   background: var(--warm-gray);
-  color: var(--black);
-  font: inherit;
+  font-size: 14px;
   font-weight: 600;
+  white-space: nowrap;
+}
+
+.karaoke-cat .karaoke-list {
+  padding: 0 20px 8px;
+}
+
+.karaoke-cat .karaoke-item:last-child {
+  border-bottom: 0;
+}
+
+.karaoke-more {
+  display: block;
+  margin: 4px auto 20px;
+  border: 0;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
-.karaoke-page:hover:not(:disabled) {
-  background: var(--warm-gray-dk);
-}
-
-.karaoke-page.current {
-  background: var(--black);
-  color: var(--white);
-}
-
-.karaoke-page:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-.karaoke-page-gap {
-  padding: 0 4px;
-  color: var(--dark);
+.karaoke-more[hidden] {
+  display: none;
 }
 
 .karaoke-back {

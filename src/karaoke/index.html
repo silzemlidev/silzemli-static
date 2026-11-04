@@ -69,15 +69,15 @@
     <!-- ===========================
          KARAOKE — КАТАЛОГ ПІСЕНЬ
          Дані: /karaoke/songs.json
-         Формат: { "updated": "YYYY-MM-DD", "songs": [["Виконавець", "Назва", "код"], ...] }
+         Формат: { "updated": "YYYY-MM-DD", "categories": [{ "name": "Категорія", "songs": [["Виконавець", "Назва", "код (необов’язково)"], ...] }] }
          УВАГА: зараз у songs.json ТЕСТОВІ дані — замінити експортом з Evolution Pro2 / EvoClub.
          =========================== -->
     <section class="karaoke-section" aria-label="Караоке">
       <div class="container">
         <h1 class="section-heading">Караоке</h1>
         <p class="menu-intro">
-          Каталог пісень, доступних у нашому караоке.<br>
-          Шукайте за назвою пісні, виконавцем або кодом.
+          Добірка пісень з нашого караоке за категоріями.<br>
+          Шукайте за назвою пісні або виконавцем.
         </p>
 
         <form class="karaoke-search" role="search" id="karaoke-form" style="scroll-margin-top:90px">
@@ -91,9 +91,7 @@
 
         <p class="karaoke-count" id="karaoke-count" aria-live="polite">Завантаження каталогу…</p>
 
-        <ul class="karaoke-list" id="karaoke-list"></ul>
-
-        <nav class="karaoke-pager" id="karaoke-pager" aria-label="Сторінки каталогу" hidden></nav>
+        <div class="karaoke-cats" id="karaoke-cats"></div>
 
         <aside class="karaoke-app" aria-labelledby="karaoke-app-title">
           <h2 id="karaoke-app-title" class="karaoke-app-title">Не знайшли свою пісню?</h2>
@@ -180,17 +178,15 @@
 
     // ── Karaoke catalog ─────────────────────────
     (function() {
-      var PAGE_SIZE = 50;
+      var PAGE_SIZE      = 50;  // songs shown per category before "Показати ще"
+      var AUTO_OPEN_MAX  = 20;  // search with ≤ this many matches opens the categories
 
       var form    = document.getElementById('karaoke-form');
       var input   = document.getElementById('karaoke-q');
       var countEl = document.getElementById('karaoke-count');
-      var listEl  = document.getElementById('karaoke-list');
-      var pagerEl = document.getElementById('karaoke-pager');
+      var catsEl  = document.getElementById('karaoke-cats');
 
-      var songs    = [];   // [{ a, t, c, key }], sorted by artist, then title
-      var results  = [];
-      var page     = 1;
+      var cats     = [];   // [{ name, songs: [{ a, t, c, key }] }]
       var lastNorm = null;
       var timer    = null;
 
@@ -218,134 +214,99 @@
         return n.toLocaleString('uk-UA');
       }
 
-      function renderCount(norm) {
-        var n = results.length;
+      function el(tag, cls, text) {
+        var e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (text != null) e.textContent = text;
+        return e;
+      }
+
+      function songItem(s) {
+        var li   = el('li', 'karaoke-item');
+        var song = el('div', 'karaoke-song');
+        song.appendChild(el('span', 'karaoke-title', s.t));
+        if (s.a) song.appendChild(el('span', 'karaoke-artist', s.a));
+        li.appendChild(song);
+        if (s.c) li.appendChild(el('span', 'karaoke-code', s.c));
+        return li;
+      }
+
+      function renderCategory(cat, matches, open) {
+        var det = el('details', 'karaoke-cat');
+        det.open = open;
+
+        var sum = el('summary');
+        sum.appendChild(el('span', 'karaoke-cat-name', cat.name));
+        var n = matches.length;
+        sum.appendChild(el('span', 'karaoke-cat-count', formatNum(n) + ' ' + plural(n, 'пісня', 'пісні', 'пісень')));
+        det.appendChild(sum);
+
+        var list = el('ul', 'karaoke-list');
+        det.appendChild(list);
+
+        var more  = el('button', 'menu-btn karaoke-more', 'Показати ще');
+        more.type = 'button';
+        var shown = 0;
+
+        function showMore() {
+          var end  = Math.min(shown + PAGE_SIZE, matches.length);
+          var frag = document.createDocumentFragment();
+          for (var i = shown; i < end; i++) frag.appendChild(songItem(matches[i]));
+          list.appendChild(frag);
+          shown = end;
+          more.hidden = shown >= matches.length;
+        }
+        more.addEventListener('click', showMore);
+        showMore();
+        det.appendChild(more);
+
+        return det;
+      }
+
+      function renderCount(norm, total, catCount) {
+        var inCats = ' у ' + catCount + ' ' + (catCount === 1 ? 'категорії' : 'категоріях');
         if (!norm) {
-          countEl.textContent = 'У каталозі ' + formatNum(n) + ' ' + plural(n, 'пісня', 'пісні', 'пісень');
-        } else if (n === 0) {
+          countEl.textContent = 'У каталозі ' + formatNum(total) + ' ' + plural(total, 'пісня', 'пісні', 'пісень') + inCats;
+        } else if (total === 0) {
           countEl.textContent = 'Нічого не знайдено. Спробуйте інший запит.';
         } else {
-          countEl.textContent = 'Знайдено ' + formatNum(n) + ' ' + plural(n, 'пісню', 'пісні', 'пісень');
+          countEl.textContent = 'Знайдено ' + formatNum(total) + ' ' + plural(total, 'пісню', 'пісні', 'пісень') + inCats;
         }
       }
-
-      function pageCount() {
-        return Math.max(1, Math.ceil(results.length / PAGE_SIZE));
-      }
-
-      function renderPage() {
-        var start = (page - 1) * PAGE_SIZE;
-        var end   = Math.min(start + PAGE_SIZE, results.length);
-        var frag  = document.createDocumentFragment();
-        listEl.textContent = '';
-
-        for (var i = start; i < end; i++) {
-          var s  = results[i];
-          var li = document.createElement('li');
-          li.className = 'karaoke-item';
-
-          var song = document.createElement('div');
-          song.className = 'karaoke-song';
-
-          var title = document.createElement('span');
-          title.className = 'karaoke-title';
-          title.textContent = s.t;
-          song.appendChild(title);
-
-          if (s.a) {
-            var artist = document.createElement('span');
-            artist.className = 'karaoke-artist';
-            artist.textContent = s.a;
-            song.appendChild(artist);
-          }
-          li.appendChild(song);
-
-          if (s.c) {
-            var code = document.createElement('span');
-            code.className = 'karaoke-code';
-            code.textContent = s.c;
-            li.appendChild(code);
-          }
-
-          frag.appendChild(li);
-        }
-
-        listEl.appendChild(frag);
-        renderPager();
-      }
-
-      function pageBtn(label, target, opts) {
-        var b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'karaoke-page' + (opts && opts.current ? ' current' : '');
-        b.textContent = label;
-        if (opts && opts.aria) b.setAttribute('aria-label', opts.aria);
-        if (opts && opts.current) b.setAttribute('aria-current', 'page');
-        if (opts && opts.disabled) b.disabled = true;
-        b.addEventListener('click', function() { goTo(target); });
-        return b;
-      }
-
-      function renderPager() {
-        var total = pageCount();
-        pagerEl.textContent = '';
-        var multi = results.length > PAGE_SIZE;
-        pagerEl.hidden = !multi;
-        if (!multi) return;
-
-        pagerEl.appendChild(pageBtn('‹', page - 1, { aria: 'Попередня сторінка', disabled: page === 1 }));
-
-        // 1 … (page-1) page (page+1) … last
-        var nums = [];
-        for (var n = 1; n <= total; n++) {
-          if (n === 1 || n === total || Math.abs(n - page) <= 1) nums.push(n);
-        }
-        var prev = 0;
-        nums.forEach(function(n) {
-          if (n - prev > 1) {
-            var gap = document.createElement('span');
-            gap.className = 'karaoke-page-gap';
-            gap.textContent = '…';
-            pagerEl.appendChild(gap);
-          }
-          pagerEl.appendChild(pageBtn(String(n), n, { current: n === page, aria: 'Сторінка ' + n }));
-          prev = n;
-        });
-
-        pagerEl.appendChild(pageBtn('›', page + 1, { aria: 'Наступна сторінка', disabled: page === total }));
-      }
-
-      function goTo(n) {
-        n = Math.min(Math.max(1, n), pageCount());
-        if (n === page) return;
-        page = n;
-        renderPage();
-        countEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-
 
       function search(raw) {
         var norm = normalize(raw);
         if (norm === lastNorm) return;
+        lastNorm = norm;
 
         var tokens = norm ? norm.split(' ') : [];
-        // When the query only grows (typing forward), the new matches are a
-        // subset of the previous ones — filter those instead of the whole catalog.
-        var pool = (lastNorm && norm.indexOf(lastNorm) === 0) ? results : songs;
+        var entries = [];
+        var total = 0;
 
-        results = tokens.length
-          ? pool.filter(function(s) {
-              for (var i = 0; i < tokens.length; i++) {
-                if (s.key.indexOf(tokens[i]) === -1) return false;
-              }
-              return true;
-            })
-          : songs;
+        cats.forEach(function(cat) {
+          var matches = tokens.length
+            ? cat.songs.filter(function(s) {
+                for (var i = 0; i < tokens.length; i++) {
+                  if (s.key.indexOf(tokens[i]) === -1) return false;
+                }
+                return true;
+              })
+            : cat.songs;
+          if (matches.length) {
+            entries.push({ cat: cat, matches: matches });
+            total += matches.length;
+          }
+        });
 
-        lastNorm = norm;
-        page = 1;
-        renderCount(norm);
-        renderPage();
+        // A narrow search opens the categories straight away;
+        // the browse view and broad searches stay collapsed.
+        var open = tokens.length > 0 && total <= AUTO_OPEN_MAX;
+
+        catsEl.textContent = '';
+        entries.forEach(function(e) {
+          catsEl.appendChild(renderCategory(e.cat, e.matches, open));
+        });
+        renderCount(norm, total, entries.length);
       }
 
       function syncUrl(raw) {
@@ -377,18 +338,21 @@
           return res.json();
         })
         .then(function(data) {
-          var collator = new Intl.Collator('uk', { sensitivity: 'base', numeric: true });
-          songs = (data.songs || [])
-            .filter(function(r) { return r && r[1]; })
-            .map(function(r) {
-              var a = r[0] ? String(r[0]) : '';
-              var t = String(r[1]);
-              var c = r[2] != null ? String(r[2]) : '';
-              return { a: a, t: t, c: c, key: normalize(a + ' ' + t + ' ' + c) };
+          cats = (data.categories || [])
+            .map(function(c) {
+              return {
+                name: String(c.name || ''),
+                songs: (c.songs || [])
+                  .filter(function(r) { return r && r[1]; })
+                  .map(function(r) {
+                    var a = r[0] ? String(r[0]) : '';
+                    var t = String(r[1]);
+                    var code = r[2] != null ? String(r[2]) : '';
+                    return { a: a, t: t, c: code, key: normalize(a + ' ' + t + ' ' + code) };
+                  })
+              };
             })
-            .sort(function(x, y) {
-              return collator.compare(x.a, y.a) || collator.compare(x.t, y.t);
-            });
+            .filter(function(c) { return c.name && c.songs.length; });
 
           var q = new URLSearchParams(window.location.search).get('q') || '';
           input.value = q;

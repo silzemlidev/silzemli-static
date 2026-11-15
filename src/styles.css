@@ -1433,6 +1433,46 @@ strong {
   text-align: center;
 }
 
+.karaoke-rules {
+  max-width: 800px;
+  margin: 24px auto 0;
+  text-align: left;
+}
+
+.karaoke-rules-body {
+  padding: 0 20px 20px;
+  color: var(--dark);
+  line-height: 1.55;
+}
+
+.karaoke-rules-body p {
+  margin: 0 0 12px;
+}
+
+.karaoke-rules-body h3 {
+  margin: 20px 0 8px;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--black);
+}
+
+.karaoke-rules-note {
+  font-weight: 700;
+  color: var(--black);
+}
+
+.karaoke-rules-limits {
+  margin: 0 0 12px;
+  padding-left: 20px;
+  font-weight: 600;
+}
+
+.karaoke-rules-limits li {
+  margin-bottom: 4px;
+}
+
 .karaoke-app-title {
   margin: 0 0 8px;
   font-size: 22px;
